@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Meri Mahnoor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #ffd1dc, #ffb7c5);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            color: #8a1c4a;
+        }
+        
+        /* Password Modal */
+        .password-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #ffb7c5;
+            display: flex; justify-content: center; align-items: center; z-index: 100;
+            opacity: 1; transition: opacity 0.5s ease;
+        }
+        
+        .password-content {
+            background: white; padding: 40px; border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); text-align: center;
+            max-width: 400px; width: 90%;
+        }
+        
+        .password-input {
+            width: 100%; padding: 15px; border: 2px solid #ffb7c5;
+            border-radius: 15px; margin-bottom: 20px; text-align: center;
+            font-size: 18px; outline: none;
+        }
+
+        .password-input:focus { border-color: #d81b60; }
+        
+        .submit-btn {
+            background: #d81b60; color: white; border: none;
+            padding: 15px 30px; border-radius: 15px; cursor: pointer; 
+            width: 100%; font-size: 18px; font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .submit-btn:hover { transform: scale(1.05); background: #b71550; }
+        
+        /* Welcome Screen */
+        .welcome-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #ffd1dc, #ffb7c5);
+            display: none; justify-content: center; align-items: center; z-index: 99;
+        }
+        
+        .welcome-message {
+            font-family: 'Dancing Script', cursive; font-size: 50px; color: #d81b60;
+            text-align: center; animation: pulse 2s infinite;
+        }
+        
+        /* Main UI */
+        .container { width: 100%; max-width: 900px; padding: 20px; margin-top: 20px; }
+        
+        .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
+        
+        .tab {
+            background: rgba(255, 255, 255, 0.6); border: none; padding: 12px 25px;
+            border-radius: 50px; cursor: pointer; font-weight: 600; color: #d81b60;
+            transition: 0.3s;
+        }
+        
+        .tab.active { background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transform: translateY(-3px); }
+        
+        .content-area {
+            background: white; border-radius: 30px; padding: 30px;
+            min-height: 500px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-content { display: none; animation: fadeIn 0.6s ease; }
+        .tab-content.active { display: block; }
+
+        /* Letter */
+        .letter { padding: 25px; background: #fff5f7; border: 2px dashed #ffb7c5; border-radius: 20px; cursor: pointer; }
+        .letter-content { max-height: 0; overflow: hidden; transition: 0.8s; line-height: 1.8; font-size: 17px; }
+        .letter.expanded .letter-content { max-height: 1500px; margin-top: 20px; }
+
+        /* Music */
+        .song-card {
+            background: #fff0f5; padding: 20px; border-radius: 20px;
+            margin-bottom: 15px; display: flex; justify-content: space-between;
+            align-items: center; border: 1px solid #ffb7c5;
+        }
+        .heart-btn { background: #d81b60; color: white; border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer; font-weight: bold; }
+
+        /* Gallery */
+        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .gallery-item { border-radius: 20px; overflow: hidden; height: 300px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); border: 5px solid white; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .gallery-item img:hover { transform: scale(1.1); }
+
+        /* Notes */
+        .note { background: #fce4ec; padding: 15px; border-radius: 15px; margin-bottom: 15px; border-left: 6px solid #d81b60; font-size: 18px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        .floating-heart {
+            position: fixed; bottom: -50px; font-size: 25px;
+            pointer-events: none; z-index: 1000; animation: floatUp 4s linear forwards;
+        }
+        @keyframes floatUp { to { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <!-- Password Modal -->
+    <div class="password-modal" id="passwordModal">
+        <div class="password-content">
+            <h2 style="font-family: 'Dancing Script'; font-size: 35px; margin-bottom: 20px; color: #d81b60;">Hello My Love</h2>
+            <input type="password" class="password-input" id="passwordInput" placeholder="Enter secret word...">
+            <button class="submit-btn" id="submitPassword">Unlock My Heart ❤️</button>
+        </div>
+    </div>
+
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <h1 class="welcome-message">Welcome My Love, Mahnoor</h1>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container" id="mainContent" style="display: none;">
+        <div class="tabs">
+            <button class="tab active" data-tab="letter-tab">❤️ Love Letter</button>
+            <button class="tab" data-tab="music-tab">🎵 Our Songs</button>
+            <button class="tab" data-tab="notes-tab">📝 Reminders</button>
+            <button class="tab" data-tab="gallery-tab">🖼️ Your Gallery</button>
+        </div>
+
+        <div class="content-area">
+            <!-- Tab: Letter -->
+            <div class="tab-content active" id="letter-tab">
+                <div class="letter" id="loveLetter">
+                    <h3 style="font-family: 'Dancing Script'; font-size: 30px; color: #d81b60;">Click to open your letter ✉️</h3>
+                    <div class="letter-content">
+                        <p>Meri Mahnoor,</p><br>
+                        <p>Every day with you feels like a beautiful dream that I never want to wake up from. Your smile brightens my darkest days, and your laughter is my favorite melody.</p><br>
+                        <p></p>I cherish every moment we spend together, from our silly inside jokes to our deep conversations. You've shown me what true happiness feels like.</p><br>
+                        <p>No matter where life takes us, always remember that my heart belongs to you.</p><br>
+                        <p><b>I Love You Forever ❤️</b></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Music -->
+            <div class="tab-content" id="music-tab">
+                <h2 style="margin-bottom: 20px;">Listen with Love 🎶</h2>
+                <div class="song-card">
+                    <span>Aarzu</span>
+                    <audio id="s1"><source src="Aarzu.mp3" type="audio/mpeg"></audio>
+                    <button class="heart-btn" onclick="togglePlay('s1', this)">🤍 Play</button>
+                </div>
+                <div class="song-card">
+                    <span>Ehsaas</span>
+                    <audio id="s2"><source src="Ehsaas.mp3" type="audio/mpeg"></audio>
+                    <button class="heart-btn" onclick="togglePlay('s2', this)">🤍 Play</button>
+                </div>
+                <div class="song-card">
+                    <span>Majboor</span>
+                    <audio id="s3"><source src="Majboor.mp3" type="audio/mpeg"></audio>
+                    <button class="heart-btn" onclick="togglePlay('s3', this)">🤍 Play</button>
+                </div>
+            </div>
+
+            <!-- Tab: Notes -->
+            <div class="tab-content" id="notes-tab">
+                <h2 style="margin-bottom: 20px;">Short Notes for You</h2>
+                <div class="note">Dont narz me, please 🥺</div>
+                <div class="note">Eat on time, apni sehat ka khayal rakha karein.</div>
+                <div class="note">You're mine.. hamesha ke liye!</div>
+                <div class="note">Meri jaan ho ap, ye bhulna mat. ❤️</div>
+            </div>
+
+            <!-- Tab: Gallery -->
+            <div class="tab-content" id="gallery-tab">
+                <h2 style="margin-bottom: 20px;">Most Beautiful Girl ✨</h2>
+                <div class="gallery">
+                    <div class="gallery-item"><img src="1.jpg"></div>
+                    <div class="gallery-item"><img src="2.jpg"></div>
+                    <div class="gallery-item"><img src="3.jpg"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password Logic
+        const submitBtn = document.getElementById('submitPassword');
+        const passwordInput = document.getElementById('passwordInput');
+
+        submitBtn.addEventListener('click', function() {
+            const pass = passwordInput.value.toLowerCase().trim();
+            if(pass === 'mano') {
+                document.getElementById('passwordModal').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('passwordModal').style.display = 'none';
+                    document.getElementById('welcomeScreen').style.display = 'flex';
+                    setTimeout(() => {
+                        document.getElementById('welcomeScreen').style.opacity = '0';
+                        setTimeout(() => {
+                            document.getElementById('welcomeScreen').style.display = 'none';
+                            document.getElementById('mainContent').style.display = 'block';
+                        }, 800);
+                    }, 2000);
+                }, 500);
+            } else {
+                alert("Galat Password hai meri jaan!");
+                passwordInput.value = "";
+            }
+        });
+
+        // Tab Logic
+        const tabs = document.querySelectorAll('.tab');
+        const contents = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.dataset.tab;
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(target).classList.add('active');
+            });
+        });
+
+        // Letter Expand
+        document.getElementById('loveLetter').addEventListener('click', function() {
+            this.classList.toggle('expanded');
+        });
+
+        // Audio Logic
+        let heartInterval;
+        function togglePlay(id, btn) {
+            const audio = document.getElementById(id);
+            if(audio.paused) {
+                document.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime=0; });
+                document.querySelectorAll('.heart-btn').forEach(b => b.innerHTML = "🤍 Play");
+                audio.play();
+                btn.innerHTML = "💖 Pause";
+                startHearts();
+            } else {
+                audio.pause();
+                btn.innerHTML = "🤍 Play";
+                stopHearts();
+            }
+        }
+
+        function startHearts() {
+            if(!heartInterval) {
+                heartInterval = setInterval(() => {
+                    const h = document.createElement("div");
+                    h.classList.add("floating-heart");
+                    h.innerHTML = ["❤️", "💖", "💕", "🌸"][Math.floor(Math.random() * 4)];
+                    h.style.left = Math.random() * 100 + "vw";
+                    document.body.appendChild(h);
+                    setTimeout(() => h.remove(), 4000);
+                }, 300);
+            }
+        }
+
+        function stopHearts() {
+            clearInterval(heartInterval);
+            heartInterval = null;
+        }
+    </script>
+</body>
+</html>
